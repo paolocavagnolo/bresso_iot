@@ -1,0 +1,36 @@
+#! /bin/sh
+# /etc/init.d/goBrain
+
+### BEGIN INIT INFO
+# Provides:          goBrain
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Simple script to start a program at boot
+# Description:       A simple script from www.stuffaboutcode.com which will start / stop a program a boot / shutdown.
+### END INIT INFO
+
+# If you want a command to always run, put it here
+
+# Carry out specific functions when asked to by the system
+case "$1" in
+  start)
+    echo "Starting the TechLab Brain"
+    # run application you want to start
+    sudo python /home/pi/Documents/techlab_iot/script/techlabBrain.py >/tmp/brainLog_error.txt 2>/tmp/brainLog_normal.txt &
+    ;;
+  stop)
+    echo "Stopping theBrain!"
+    # kill application you want to stop
+    sudo kill -9 $(ps aux | grep '[p]ython /home/pi/Documents/techlab_iot/script/techlabBrain.py' | awk '{print $2}')
+    sudo mv /tmp/brainLog_normal.txt /tmp/brainLog_normal.bak
+    sudo mv /tmp/brainLog_error.txt /tmp/brainLog_error.bak
+    ;;
+  *)
+    echo "Usage: /etc/init.d/goBrain {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0

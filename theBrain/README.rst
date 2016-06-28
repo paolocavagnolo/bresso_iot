@@ -1,8 +1,10 @@
-# tagNFC_DB_server
+tagNFC_DB_server
+=================
 
 An open source system to manage machines in a cool makerspace!
+--------------------------------------------------------------
 
-The system is composed by nodes and 1 gateway. The gateway is a raspberry pi 3 with an RFM69 moteino board connected trough UART.
+The system is composed by nodes and 1 gateway. The gateway is a raspberry pi 3 with an RF69HW moteino board connected trough UART.
 Each node has at least 1 moteino board and a NFC tag shield.
 
 ## Gateway
@@ -70,7 +72,6 @@ http://blog.scphillips.com/posts/2013/07/getting-a-python-script-to-run-in-the-b
 
       https://www.raspberrypi.org/documentation/remote-access/web-server/apache.md
 
-
 ## Set-up github on local machine
 
       sudo apt-get install git-core
@@ -135,3 +136,10 @@ https://www.digitalocean.com/community/tutorials/how-to-set-up-an-openvpn-server
 
 ## CRONTAB
 sudo service mongodb start
+
+
+https://www.raspberrypi.org/forums/viewtopic.php?f=108&t=120793
+
+      sudo apt-get install xinput
+
+http://forums.pimoroni.com/t/official-7-raspberry-pi-touch-screen-faq/959
