@@ -11,8 +11,8 @@
 
 #define Reset_AVR() wdt_enable(WDTO_30MS); while(1) {}
 
-#define NODEID      4       // node ID used for this unit
-#define NETWORKID   100
+#define NODEID      2       // node ID used for this unit
+#define NETWORKID   90
 #define GATEWAYID   1
 
 #define FREQUENCY   RF69_433MHZ
@@ -145,7 +145,9 @@ void setup(){
 
 char message[5];
 long timeoutMAX = 60000000;
+char payload[] = "123 ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+long oldT = 0;
 
 void loop(){
 
@@ -154,6 +156,8 @@ void loop(){
   }
 
   if (radio.receiveDone()) {
+
+    CheckForWirelessHEX(radio, flash, true);
 
     byte inByte[radio.DATALEN];
 
@@ -187,6 +191,13 @@ void loop(){
 
   }
 
+  if ((millis() - oldT) > 1000) {
+    oldT = millis();
+    radio.sendWithRetry(GATEWAYID, payload, 10);
+  }
+
+
+  /*
   if (tA>=COUNT_TICK) {
     tA = tA - COUNT_TICK;
     totenA = totenA + 0.01;
@@ -255,7 +266,7 @@ void loop(){
     radio.sendWithRetry(GATEWAYID, message, sendSize);
   }
 // end loop
-
+  */
 }
 
 void float2Bytes(float val,byte* bytes_array){
