@@ -38,8 +38,6 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s: %(message)s')
 logger = logging.getLogger()
 
 state = 0
-id_session = int(read_last_id_session(dbSes))
-logger.debug(id_session)
 
 try:
     while True:
