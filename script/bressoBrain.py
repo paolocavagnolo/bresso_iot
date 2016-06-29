@@ -32,9 +32,7 @@ def goReal(msgOut):
 
 
 # Check internet connection!
-dbLog = mongoDB('radio_log','techlab') #work with the collection 'radio-logs' with the database 'techlab-db'
-dbMemb = mongoDB('members','techlab')
-dbSes = mongoDB('sessions','techlab')
+dbLog = mongoDB('radio_log','bresso') #work with the collection 'radio-logs' with the database 'techlab-db'
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s: %(message)s')
 logger = logging.getLogger()
@@ -56,45 +54,15 @@ try:
                 logger.debug(RFmsg)
                 msgIn = radioPkt(RFmsg)
                 state = 1
-            elif readFromTelegram():    # Secondly, look at telegram
-                logger.debug("read_telegram")
-                msgIn = telegramPkt()
-                state = 1
 
         ## PROCESS
         if state == 1:
             logger.debug(msgIn.__dict__)
             dbLog.write(msgIn.__dict__)   ## msg to mongo online database
 
-
-            if msgIn.idm == 'n':      ## NFC from laser
-                logger.debug("process_tag")
-                msgOut = checkMember(msgIn, dbMemb)
-                if msgOut > 0:
-                    id_session = id_session + 1
-                    openSession(msgIn, id_session, dbSes, dbMemb)
-                    state = 2
-                else:
-                    state = 0
-
-            elif msgIn.idm == 't':    ## Laser tick
-                logger.debug("process_laser")
-                msgOut = updateMember(msgIn, dbMemb, dbSes, id_session)
-                state = 2
-
-            elif msgIn.idm == 'e':    ## Energy tick
+            if msgIn.idm == 'e':    ## Energy tick
                 logger.debug("process_energy")
                 updateEnergy(msgIn)
-                state = 0
-
-            elif msgIn.idm == 'b':
-                logger.debug("process_energy")
-                if msgIn.cmd == '/door':  ## Door
-                    logger.debug("APRO PORTA!")
-                msgOut = telegramPrs(msgIn)
-                state = 2
-
-            elif msgIn.idm == 'd':
                 state = 0
 
             else:
@@ -115,6 +83,4 @@ except Exception, e:
     logging.error(e, exc_info=True)
     logger.info("Game Over!", exc_info=True)
     dbLog.close()
-    dbMemb.close()
-    dbSes.close()
     ser.close()
