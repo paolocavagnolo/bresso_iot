@@ -7,7 +7,7 @@
 //************ IMPORTANT SETTINGS *************************************************************
 //*********************************************************************************************
 #define GATEWAYID     1
-#define NETWORKID     100  //the same on all nodes that talk to each other
+#define NETWORKID     90  //the same on all nodes that talk to each other
 //Match frequency to the hardware version of the radio on your Moteino (uncomment one):
 #define FREQUENCY     RF69_433MHZ
 #define ENCRYPTKEY    "sampleEncryptKey" //exactly the same 16 characters/bytes on all nodes!
