@@ -114,6 +114,18 @@ while True:
         name = 'Illuminazione Piano Terra'
     )
 
+    traceB = Scatter(
+        x=xB,
+        y=dxB,
+        name = 'Illuminazione Piano Terra'
+    )
+
+    traceC = Scatter(
+        x=xC,
+        y=dxC,
+        name = 'Illuminazione Piano Terra'
+    )
+
 
     data = Data([traceA,traceB,traceC])
 
