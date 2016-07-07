@@ -110,7 +110,7 @@ while True:
 
     traceA = Scatter(
         x=xA,
-        y=dxA
+        y=dxA,
         name = 'Illuminazione Piano Terra'
     )
 
