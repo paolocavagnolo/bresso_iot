@@ -111,19 +111,20 @@ while True:
     traceA = Scatter(
         x=xA,
         y=dxA
-    )
-    traceB = Scatter(
-        x=xB,
-        y=dxB
-    )
-    traceC = Scatter(
-        x=xC,
-        y=dxC
+        name = 'Illuminazione Piano Terra'
     )
 
 
     data = Data([traceA,traceB,traceC])
+
+    # Edit the layout
+    layout = dict(title = 'Consumo Elettrico nella Scuola di Bresso',
+                  xaxis = dict(title = 'Tempo'),
+                  yaxis = dict(title = 'Potenza espressa in Watt'),
+                  )
+
     plotly.offline.plot(data, filename = 'energy.html')
+
     commandString = "sudo cp energy.html /var/www/html/"
     os.system(commandString)
     commandString = "sudo rm /var/www/html/index.html"
