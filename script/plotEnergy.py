@@ -111,24 +111,27 @@ while True:
     traceA = Scatter(
         x=xA,
         y=dxA,
-        name = 'Illuminazione Piano Terra'
+        name = 'Illuminazione Piano Terra',
+        fill='tozeroy'
     )
 
     traceB = Scatter(
         x=xB,
         y=dxB,
+        fill='tonexty'
     )
 
     traceC = Scatter(
         x=xC,
         y=dxC,
+        fill='tonexty'
     )
 
 
     data = Data([traceA,traceB,traceC])
 
     # Edit the layout
-    layout = dict(title = 'Consumo Elettrico nella Scuola di Bresso',
+    layout = dict(title = 'Consumo Illuminazione (Piano Terra) nella Scuola di Bresso',
                   xaxis = dict(title = 'Tempo'),
                   yaxis = dict(title = 'Potenza espressa in Watt'),
                   )
