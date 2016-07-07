@@ -117,13 +117,11 @@ while True:
     traceB = Scatter(
         x=xB,
         y=dxB,
-        name = 'Illuminazione Piano Terra'
     )
 
     traceC = Scatter(
         x=xC,
         y=dxC,
-        name = 'Illuminazione Piano Terra'
     )
 
 
@@ -135,7 +133,9 @@ while True:
                   yaxis = dict(title = 'Potenza espressa in Watt'),
                   )
 
-    plotly.offline.plot(data, filename = 'energy.html')
+    fig = dict(data=data, layout=layout)
+
+    plotly.offline.plot(fig, filename = 'energy.html')
 
     commandString = "sudo cp energy.html /var/www/html/"
     os.system(commandString)
