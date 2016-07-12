@@ -2,10 +2,15 @@ import sys
 import time
 import os
 
-from datetime import datetime
 
+from datetime import datetime
+import dateutil.relativedelta as dateu
 import plotly
 from plotly.graph_objs import *
+import plotly.plotly as py
+import plotly.graph_objs as go
+from plotly.tools import FigureFactory as FF
+
 
 SYSTEM_PATH = '/home/pi/Documents/'
 PATH_KEYS = SYSTEM_PATH + 'keys.txt'
@@ -14,7 +19,7 @@ fkeylines=fkey.readlines()
 ENERGY_FILE = SYSTEM_PATH + fkeylines[7].split('\n')[0]
 fkey.close()
 
-ERR_THS = 3
+ERR_THS = 8
 
 def readFromFile():
   arduFile = ENERGY_FILE
@@ -108,38 +113,174 @@ while True:
             i=i+1
 
 
-    traceA = Scatter(
-        x=xA,
-        y=dxA,
-        name = 'Illuminazione Piano Terra',
-        fill='tozeroy'
-    )
-
-    traceB = Scatter(
-        x=xB,
-        y=dxB,
-        fill='tonexty'
-    )
-
-    traceC = Scatter(
-        x=xC,
-        y=dxC,
-        fill='tonexty'
-    )
+    # traceA = Scatter(
+    #     x=xA,
+    #     y=dxA,
+    #     name='Condizionatore'
+    # )
+    # traceB = Scatter(
+    #     x=xB,
+    #     y=dxB,
+    #     name='Prese Elettriche'
+    # )
+    # traceC = Scatter(
+    #     x=xC,
+    #     y=dxC,
+    #     name='Illuminazione'
+    # )
 
 
-    data = Data([traceA,traceB,traceC])
+    # data = Data([traceA,traceB,traceC])
+
 
     # Edit the layout
-    layout = dict(title = 'Consumo Illuminazione (Piano Terra) nella Scuola di Bresso',
-                  xaxis = dict(title = 'Tempo'),
-                  yaxis = dict(title = 'Potenza espressa in Watt'),
-                  )
+    # layout = dict(title = 'Consumo Elettrico nel TechLab',
+    #               xaxis = dict(title = 'Tempo'),
+    #               yaxis = dict(title = 'Potenza espressa in Watt'),
+    #               margin = dict(t=75, l=50),
+    #               height = 800
+    #               )
 
-    fig = dict(data=data, layout=layout)
+    # fig = dict(data=data, layout=layout)
 
-    plotly.offline.plot(fig, filename = 'energy.html')
+########################
 
+    # Add table data
+    now = datetime.now()
+
+    pday = now - dateu.relativedelta(days=1)
+
+    pweek = now - dateu.relativedelta(days=7)
+    pweek_s = pweek.replace(pweek.year,pweek.month,pweek.day-pweek.weekday())
+    pweek_e = pweek_s.replace(pweek_s.year,pweek_s.month,pweek_s.day+6)
+
+    pmonth = now - dateu.relativedelta(months=1)
+
+    en_pday_a = 0
+    en_pday_b = 0
+    en_pday_c = 0
+
+    control_pday = []
+
+    en_pweek_a = 0
+    en_pweek_b = 0
+    en_pweek_c = 0
+    control_pweek = []
+
+    en_pmonth_a = 0
+    en_pmonth_b = 0
+    en_pmonth_c = 0
+    control_pmonth = []
+
+    i = 0
+    for x in xA:
+        d0 = datetime.strptime(x, '%Y-%m-%d %H:%M:%S.%f')
+        #ieri
+        if d0.year == pday.year and d0.month == pday.month and d0.day == pday.day:
+            en_pday_a = en_pday_a + 1
+            # control_pday.append[yA[i]]
+
+        #scorsa settimana
+        if d0.year >= pweek_s.year and d0.year <= pweek_e.year and d0.month >= pweek_s.month and d0.month <= pweek_e.month and d0.day >= pweek_s.day and d0.day <= pweek_e.day:
+            en_pweek_a = en_pweek_a + 1
+            # control_pweek.append[yA[i]]
+
+        #scorso mese
+        if d0.year == pmonth.year and d0.month == pmonth.month:
+            en_pmonth_c = en_pmonth_c + 1
+            # control_pmonth.append[yA[i]]
+
+        i = i + 1
+
+    consumo_ieri_A = float(en_pday_a)/100
+    consumo_settimana_A = float(en_pweek_a)/100
+    consumo_mese_scorso_A = float(en_pmonth_c)/100
+
+    i = 0
+    for x in xB:
+        d0 = datetime.strptime(x, '%Y-%m-%d %H:%M:%S.%f')
+        #ieri
+        if d0.year == pday.year and d0.month == pday.month and d0.day == pday.day:
+            en_pday_b = en_pday_b + 1
+            # control_pday.append[yB[i]]
+
+        #scorsa settimana
+        if d0.year >= pweek_s.year and d0.year <= pweek_e.year and d0.month >= pweek_s.month and d0.month <= pweek_e.month and d0.day >= pweek_s.day and d0.day <= pweek_e.day:
+            en_pweek_b = en_pweek_b + 1
+            # control_pweek.append[yB[i]]
+
+        #scorso mese
+        if d0.year == pmonth.year and d0.month == pmonth.month:
+            en_pmonth_b = en_pmonth_b + 1
+            # control_pmonth.append[yB[i]]
+
+        i = i + 1
+
+    consumo_ieri_B = float(en_pday_b)/100
+    consumo_settimana_B = float(en_pweek_b)/100
+    consumo_mese_scorso_B = float(en_pmonth_b)/100
+
+    i = 0
+    for x in xC:
+        d0 = datetime.strptime(x, '%Y-%m-%d %H:%M:%S.%f')
+        #ieri
+        if d0.year == pday.year and d0.month == pday.month and d0.day == pday.day:
+            en_pday_c = en_pday_c + 1
+            # control_pday.append[yA[i]]
+
+        #scorsa settimana
+        if d0.year >= pweek_s.year and d0.year <= pweek_e.year and d0.month >= pweek_s.month and d0.month <= pweek_e.month and d0.day >= pweek_s.day and d0.day <= pweek_e.day:
+            en_pweek_c = en_pweek_c + 1
+            # control_pweek.append[yA[i]]
+
+        #scorso mese
+        if d0.year == pmonth.year and d0.month == pmonth.month:
+            en_pmonth_c = en_pmonth_c + 1
+            # control_pmonth.append[yA[i]]
+
+        i = i + 1
+
+
+    consumo_ieri_C = float(en_pday_c)/100
+    consumo_settimana_C = float(en_pweek_c)/100
+    consumo_mese_scorso_C = float(en_pmonth_c)/100
+
+    table_data = [['Consumi [kWh]', 'Ieri', 'Settimana scorsa', 'Mese scorso'],
+                  #['Condizionatore', consumo_ieri_A, consumo_settimana_A, consumo_mese_scorso_A],
+                  #['Prese Elettriche', consumo_ieri_B, consumo_settimana_B, consumo_mese_scorso_B],
+                  ['Illuminazione', consumo_ieri_A, consumo_settimana_A, consumo_mese_scorso_A]]
+
+    # Initialize a figure with FF.create_table(table_data)
+    figure = FF.create_table(table_data, height_constant=60)
+
+    # Make traces for graph
+    trace1 = go.Scatter(x=xA, y=dxA, xaxis='x2', yaxis='y2',
+                    name='Illuminazione')
+    trace2 = go.Scatter(x=xB, y=dxB, xaxis='x2', yaxis='y2',
+                    name='Prese Elettriche')
+    trace3 = go.Scatter(x=xC, y=dxC, xaxis='x2', yaxis='y2',
+                    name='Illuminazione')
+
+    # Add trace data to figure
+    figure['data'].extend(go.Data([trace1, trace2, trace3]))
+
+    # Edit layout for subplots
+    figure.layout.yaxis.update({'domain': [0, .15]})
+    figure.layout.yaxis2.update({'domain': [.24, 1]})
+    # The graph's yaxis2 MUST BE anchored to the graph's xaxis2 and vice versa
+    figure.layout.yaxis2.update({'anchor': 'x2'})
+    figure.layout.xaxis2.update({'anchor': 'y2'})
+    figure.layout.yaxis2.update({'title': 'Potenza espressa in Watt'})
+    # Update the margins to add a title and see graph x-labels.
+    figure.layout.margin.update({'t':75, 'l':50})
+    figure.layout.update({'title': 'Consumo elettrico linea illuminazione scuola Bresso'})
+    # Update the height because adding a graph vertically will interact with
+    # the plot height calculated for the table
+    figure.layout.update({'height':760})
+
+####################
+
+    plotly.offline.plot(figure, filename = 'energy.html')
     commandString = "sudo cp energy.html /var/www/html/"
     os.system(commandString)
     commandString = "sudo rm /var/www/html/index.html"

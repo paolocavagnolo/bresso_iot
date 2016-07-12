@@ -2,8 +2,10 @@ nose
 sphinx
 oauth2client
 pymongo
+gspread
 pyserial
 telepot
 simplejson
-gspread
 logging
+plotly
+python-dateutil
