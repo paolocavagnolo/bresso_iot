@@ -1,36 +1,43 @@
-#! /bin/sh
-# /etc/init.d/goBrain
-
+#!/bin/sh
 ### BEGIN INIT INFO
 # Provides:          goBrain
-# Required-Start:    $remote_fs $syslog
-# Required-Stop:     $remote_fs $syslog
+# Required-Start:    $local_fs $network $named $time $syslog
+# Required-Stop:     $local_fs $network $named $time $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Simple script to start a program at boot
-# Description:       A simple script from www.stuffaboutcode.com which will start / stop a program a boot / shutdown.
+# Description:       The Brain!!!
 ### END INIT INFO
 
-# If you want a command to always run, put it here
+NAME="goBrain"
 
-# Carry out specific functions when asked to by the system
+PROGRAM_PATH="/home/pi/Documents/bresso_iot/script/bressoBrain.py"
+ERROR_PATH="/tmp/brainLog_error.txt"
+LOG_PATH="/tmp/brainLog_normal.txt"
+SCRIPT="python $PROGRAM_PATH >$ERROR_PATH 2>$LOG_PATH &"
+
+RUNAS=root
+
+start() {
+  echo 'Starting service…' >&2
+  su -c "$SCRIPT" $RUNAS
+  echo 'Service started' >&2
+}
+
+stop() {
+  echo 'Stopping service…' >&2
+  kill -9 $(ps aux | grep "[p]ython $PROGRAM_PATH" | awk '{print $2}')
+  mv $LOG_PATH $LOG_PATH.bak
+  mv $ERROR_PATH $ERROR_PATH.bak
+  echo 'Service stopped' >&2
+}
+
 case "$1" in
   start)
-    echo "Starting the Bresso Brain"
-    # run application you want to start
-    sudo python /home/pi/Documents/bresso_iot/script/bressoBrain.py >/tmp/brainLog_error.txt 2>/tmp/brainLog_normal.txt &
+    start
     ;;
   stop)
-    echo "Stopping theBrain!"
-    # kill application you want to stop
-    sudo kill -9 $(ps aux | grep '[p]ython /home/pi/Documents/bresso_iot/script/bressoBrain.py' | awk '{print $2}')
-    sudo mv /tmp/brainLog_normal.txt /tmp/brainLog_normal.bak
-    sudo mv /tmp/brainLog_error.txt /tmp/brainLog_error.bak
+    stop
     ;;
   *)
-    echo "Usage: /etc/init.d/goBrain {start|stop}"
-    exit 1
-    ;;
+    echo "Usage: $0 {start|stop}"
 esac
-
-exit 0
