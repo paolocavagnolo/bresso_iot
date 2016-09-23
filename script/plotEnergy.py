@@ -65,8 +65,8 @@ while True:
         totB = totB + v
     totB = totB / 10
 
-    print totA + " kWh di 2"
-    print totB + " kWh di 3"
+    print str(totA) + " kWh di 2"
+    print str(totB) + " kWh di 3"
 
 
 ########################
