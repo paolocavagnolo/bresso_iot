@@ -65,9 +65,15 @@ while True:
         totB = totB + v
     totB = totB / 10
 
-    print str(totA) + " kWh di 2"
-    print str(totB) + " kWh di 3"
+    commandString = "sudo rm ~/Documents/bresso_iot/display/main.html"
+    os.system(commandString)
+    commandString = "sudo cp ~/Documents/bresso_iot/display/original.html ~/Documents/bresso_iot/display/main.html"
+    os.system(commandString)
+    
 
+    commandString = "~/refresh.sh"
+    os.system(commandString)
+    time.sleep(60)
 
 ########################
 
@@ -81,7 +87,7 @@ while True:
     # commandString = "sudo mv /var/www/html/energy.html /var/www/html/index.html"
     # os.system(commandString)
     #
-    # time.sleep(30)
+    #
 
 
 
