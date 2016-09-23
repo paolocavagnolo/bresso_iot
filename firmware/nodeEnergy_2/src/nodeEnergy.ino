@@ -8,7 +8,6 @@
 #include <avr/interrupt.h>
 #include <SPIFlash.h>      //get it here: https://www.github.com/lowpowerlab/spiflash
 #include <avr/wdt.h>
-#include <WirelessHEX69.h> //get it here: https://github.com/LowPowerLab/WirelessProgramming/tree/master/WirelessHEX69
 #include <avr/io.h>
 #include <avr/wdt.h>
 

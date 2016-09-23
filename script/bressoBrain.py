@@ -32,7 +32,7 @@ def goReal(msgOut):
 
 
 # Check internet connection!
-dbLog = mongoDB('radio_log','bresso') #work with the collection 'radio-logs' with the database 'techlab-db'
+# dbLog = mongoDB('radio_log','bresso') #work with the collection 'radio-logs' with the database 'techlab-db'
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s: %(message)s')
 logger = logging.getLogger()
@@ -56,7 +56,7 @@ try:
         ## PROCESS
         if state == 1:
             logger.debug(msgIn.__dict__)
-            dbLog.write(msgIn.__dict__)   ## msg to mongo online database
+            # dbLog.write(msgIn.__dict__)   ## msg to mongo online database
 
             if msgIn.idm == 'e':    ## Energy tick
                 logger.debug("process_energy")
@@ -80,5 +80,5 @@ try:
 except Exception, e:
     logging.error(e, exc_info=True)
     logger.info("Game Over!", exc_info=True)
-    dbLog.close()
+    # dbLog.close()
     ser.close()
