@@ -1,7 +1,11 @@
 h1 {
   font: 400 55px/1 'Baloo', cursive;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
 p {
+  margin-right: 10px;
+  margin-left: 10px;
   font: 400 20px 'Open Sans', sans-serif, bold;
 }
