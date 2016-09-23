@@ -351,7 +351,7 @@ def readFromFile():
 
 
 def updateEnergy(msgIn):
-    open(ENERGYLOG,'a+',0).write(str(msgIn.date) + ',' + str(msgIn.idphase) + ',' + str(msgIn.count) + '\n')
+    open(ENERGYLOG,'a+',0).write(str(msgIn.date) + ',' + str(msgIn.ids) + ',' + str(msgIn.count) + '\n')
 
 
 ## other usefull functions
