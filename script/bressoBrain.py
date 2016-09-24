@@ -34,7 +34,7 @@ def goReal(msgOut):
 # Check internet connection!
 # dbLog = mongoDB('radio_log','bresso') #work with the collection 'radio-logs' with the database 'techlab-db'
 
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s: %(message)s')
+logging.basicConfig(level=logging.INFO, format='%(asctime)s: %(message)s')
 logger = logging.getLogger()
 
 state = 0
@@ -49,7 +49,7 @@ try:
             newSerial, RFmsg = readFromSerial()
             if newSerial:   # First of all, look at the serial port for communication from moteino
                 logger.debug("read_serial")
-                logger.debug(RFmsg)
+                logger.info(RFmsg)
                 msgIn = radioPkt(RFmsg)
                 state = 1
 
