@@ -1,11 +1,22 @@
 h1 {
-  font: 400 55px/1 'Baloo', cursive;
-  margin-right: 10px;
-  margin-left: 10px;
+  font: 400 46px/1 'Baloo', cursive;
+  margin-right: 12px;
+  margin-left: 12px;
+  text-align: left;
 }
 
 p {
-  margin-right: 10px;
-  margin-left: 10px;
+  margin-right: 12px;
+  margin-left: 12px;
   font: 400 20px 'Open Sans', sans-serif, bold;
+}
+
+.myClass
+{
+  display:block;
+  height:300px;
+  margin-right: 12px;
+  margin-left: 12px;
+  text-align: left;
+  font: 400 19px 'Open Sans', sans-serif, bold;
 }

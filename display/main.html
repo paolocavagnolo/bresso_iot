@@ -1,30 +1,53 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="it">
 
 <head>
-  <meta charset=utf-8 />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="description" content="description">
 
-  <title>Page Title</title>
   <link href="main.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Baloo" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
 </head>
 
-<body>
-<h1>
-Grazie alla nuova illuminazione a LED la scuola sta risparmiando
-</h1>
-<p>
-  Questo grazie al montaggio di lampade di nuova generazione che permettono, a parità di luminosità della stanza,
-  di risparmiare fino al 55% dei consumi elettrici. Sono state sostituite tutte le lampade nelle aule, nei corridoi, negli uffici
-  e nella cucina.
-  Il colore della luce scelta è di <b>4000K</b>, una luce con una forte componente di blu che stimola l'attenzione; adatta per un utilizzo
-  diurno.
-</p>
+<body onload="init();">
 
-<center>
-<img src="logo.jpg" width=400px>
-</center>
+  <h1>
+  Grazie alla nuova illuminazione a LED la scuola sta risparmiando
+  </h1>
+
+  <p>
+	<div id="timedMsgDiv" class="myClass">
+  </div>
+
+
+	<script type="text/javascript">
+
+	function timedMsg() {
+		currMsg++;
+		document.getElementById('timedMsgDiv').innerHTML = msgArr[currMsg%msgArr.length];
+	};
+
+	function init() {
+		currMsg = -1;
+		msgArr = Array('La SCUOLA DELL’INFANZIA <i>“Ferruccio Recalcati”</i>, dell’Ente Morale Pio XI, ha riqualificato il proprio impianto di illuminazione, con la sostituzione delle vecchie lampade, con corpi illuminanti con tecnologia Led, aderendo alle ultime indicazioni della CE, recepite dal Governo Italiano. (Decreto Legislativo 115/08, in attuazione della Direttiva 2006/32/CE e in linea con la Direttiva 2012/27/CE e Decreto Legislativo 102/2014).',
+                    'Tutti i corpi illuminanti Led installati, dalla <span style="color:#0ba054"><b><i>Feelgreen</i></b></span>, (azienda E.S.Co. certificata UNI.CEI 11352), contribuiscono ad un risparmio energetico di oltre <span style="color:#0ba054"><b>15.000 kWh/anno</b></span>, pari al <span style="color:#0ba054"><b>53%</b></span>, calcolato sul costo dei consumi del vecchio impianto di illuminazione.Le lampade Led hanno una lunga durata, oltre <span style="color:#0ba054"><b>50.000 ore di accensione continua</b></span>, pari ad almeno 4 volte la durata delle migliori tecnologie. <i>(15/18 anni di utilizzo continuo, con accensione immediata e non ritardata come in molte altre lampade).</i>',
+                    'I corpi illuminanti Led impiantati, offrono un importante livello di sicurezza: oltre a garantire una luce <span style="color:#0ba054">priva di infrarossi e ultravioletti</span>, un grado di illuminamento stabile con temperatura colore “naturale”, non contengono sostanze pericolose come metalli pesanti, non c’è mercurio e alogenuri metallici. Le lampade Led installate, offrono il massimo confort visivo e la <span style="color:#0ba054">sicurezza fotobiologica</span>. (EN 62471),oltre a sopportare senza problemi vibrazioni e scosse.',
+                    'I corpi illuminanti Led installati, contribuiscono a diminuire la produzione di CO2. Il nuovo impianto di illuminazione evita oltre <span style="color:#0ba054">kg 11.000/anno di emissioni di CO2</span>, con il massimo rispetto per l’ambiente. L’impianto di illuminazione con tecnologia Led installato è totalmente controllato da un sistema di telecontrollo, il quale oltre a misurare, in tempo reale, i consumi elettrici dell’impianto di illuminazione, può monitorare la qualità dell’aria, la temperatura, fughe di gas, fumi ed altro.');
+		timedMsg();
+		var t=setInterval("timedMsg()",4000);
+	};
+
+	window.onload = init();
+	</script>
+
+  <center>
+  <img src="logo.jpg" width=400px>
+  </center>
 
 </body>
+
+</html>
